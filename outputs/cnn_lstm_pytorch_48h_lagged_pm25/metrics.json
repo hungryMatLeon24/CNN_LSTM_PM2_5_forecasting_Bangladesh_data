@@ -1,0 +1,109 @@
+{
+  "framework": "PyTorch",
+  "model_name": "cnn_lstm_pytorch_48h_lagged_pm25_spike_weighted",
+  "best_epoch": 16,
+  "best_val_loss": 0.0022518809651055263,
+  "total_epochs": 31,
+  "test_metrics": {
+    "MAE": 22.552781883750374,
+    "RMSE": 33.19737934649157,
+    "MAPE": 25.000385899749126,
+    "R2": 0.4944214512828171
+  },
+  "data_config": {
+    "input_csv": "ARQI_2024_complete.csv",
+    "datetime_col": "Datetime",
+    "target_col": "PM2_5_BARC",
+    "feature_cols": [
+      "PM2_5_BARC",
+      "SO2_BARC",
+      "NO_BARC",
+      "NO2_BARC",
+      "NOX_BARC",
+      "CO_BARC",
+      "O3_BARC",
+      "PM10_BARC",
+      "WS_BARC",
+      "WD_BARC",
+      "Temp_BARC",
+      "RH_BARC",
+      "BP_BARC",
+      "SR_BARC",
+      "hour_sin",
+      "hour_cos",
+      "month_sin",
+      "month_cos",
+      "dow_sin",
+      "dow_cos"
+    ],
+    "n_features": 20,
+    "window_size": 48,
+    "horizon": 1,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "train_samples": 6100,
+    "val_samples": 1270,
+    "test_samples": 1270,
+    "date_range": [
+      "2024-01-01 01:00:00",
+      "2025-01-01 00:00:00"
+    ],
+    "uses_cyclic_time_features": true,
+    "uses_lagged_target_feature": true,
+    "spike_weighting": {
+      "spike_threshold": 75.0,
+      "spike_weight": 3.0,
+      "extreme_spike_threshold": 150.0,
+      "extreme_spike_weight": 5.0
+    }
+  },
+  "model_config": {
+    "window_size": 48,
+    "cnn_filters_1": 64,
+    "cnn_filters_2": 32,
+    "cnn_kernel": 3,
+    "lstm_units_1": 64,
+    "lstm_units_2": 32,
+    "dense_units": 32,
+    "dropout_rate": 0.3,
+    "learning_rate": 0.0005,
+    "batch_size": 32,
+    "max_epochs": 150,
+    "patience": 15,
+    "min_delta": 0.0001,
+    "warmup_epochs": 5,
+    "huber_delta": 1.0,
+    "grad_clip": 0.5,
+    "seed": 42
+  },
+  "trainable_parameters": 48993,
+  "loss_function": "weighted MSE with spike sample weights",
+  "feature_improvements": [
+    "added lagged PM2_5_BARC as an input feature",
+    "used sample weights so PM2.5 spikes affect the loss more strongly",
+    "switched PyTorch loss from Huber to weighted MSE to punish spike errors more"
+  ],
+  "spike_weighting": {
+    "spike_threshold": 75.0,
+    "spike_weight": 3.0,
+    "extreme_spike_threshold": 150.0,
+    "extreme_spike_weight": 5.0
+  },
+  "regularization_changes": [
+    "dropout_rate increased to 0.30",
+    "learning_rate reduced to 0.0005",
+    "lstm_units_1 reduced to 64",
+    "lstm_units_2 reduced to 32",
+    "batch_size reduced to 32",
+    "removed temporal attention",
+    "removed bidirectional LSTM"
+  ],
+  "kept_from_previous_model": [
+    "weighted MSE loss",
+    "cyclic time features",
+    "48-hour input window",
+    "learning-rate warmup",
+    "gradient clipping"
+  ]
+}

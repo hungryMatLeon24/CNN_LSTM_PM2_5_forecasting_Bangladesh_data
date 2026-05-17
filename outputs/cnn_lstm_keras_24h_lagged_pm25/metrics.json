@@ -1,0 +1,82 @@
+{
+  "framework": "TensorFlow/Keras",
+  "model_name": "cnn_lstm_keras_24h_lagged_pm25_spike_weighted",
+  "best_epoch": 16,
+  "total_epochs": 18,
+  "best_val_loss": 0.0036657704040408134,
+  "best_val_mae_scaled": 0.02942216768860817,
+  "test_metrics": {
+    "MAE": 22.80767194712549,
+    "RMSE": 30.99622205030141,
+    "MAPE": 23.241925751797666,
+    "R2": 0.5714554847360707
+  },
+  "data_config": {
+    "input_csv": "ARQI_2024_complete.csv",
+    "datetime_col": "Datetime",
+    "target_col": "PM2_5_BARC",
+    "feature_cols": [
+      "PM2_5_BARC",
+      "SO2_BARC",
+      "NO_BARC",
+      "NO2_BARC",
+      "NOX_BARC",
+      "CO_BARC",
+      "O3_BARC",
+      "PM10_BARC",
+      "WS_BARC",
+      "WD_BARC",
+      "Temp_BARC",
+      "RH_BARC",
+      "BP_BARC",
+      "SR_BARC"
+    ],
+    "n_features": 14,
+    "window_size": 24,
+    "horizon": 1,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "train_samples": 6124,
+    "val_samples": 1294,
+    "test_samples": 1294,
+    "date_range": [
+      "2024-01-01 01:00:00",
+      "2025-01-01 00:00:00"
+    ],
+    "uses_cyclic_time_features": false,
+    "uses_lagged_target_feature": true,
+    "spike_weighting": {
+      "spike_threshold": 75.0,
+      "spike_weight": 3.0,
+      "extreme_spike_threshold": 150.0,
+      "extreme_spike_weight": 5.0
+    }
+  },
+  "model_config": {
+    "window_size": 24,
+    "cnn_filters_1": 64,
+    "cnn_filters_2": 32,
+    "cnn_kernel": 3,
+    "pool_size": 2,
+    "lstm_units_1": 100,
+    "lstm_units_2": 50,
+    "dense_units": 25,
+    "dropout_rate": 0.2,
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "max_epochs": 100,
+    "patience": 10,
+    "min_delta": 0.0001
+  },
+  "feature_improvements": [
+    "added lagged PM2_5_BARC as an input feature",
+    "used sample weights so PM2.5 spikes affect the loss more strongly"
+  ],
+  "spike_weighting": {
+    "spike_threshold": 75.0,
+    "spike_weight": 3.0,
+    "extreme_spike_threshold": 150.0,
+    "extreme_spike_weight": 5.0
+  }
+}

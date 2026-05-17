@@ -1,0 +1,42 @@
+{
+  "input_csv": "ARQI_2024_complete.csv",
+  "datetime_col": "Datetime",
+  "target_col": "PM2_5_BARC",
+  "feature_cols": [
+    "PM2_5_BARC",
+    "SO2_BARC",
+    "NO_BARC",
+    "NO2_BARC",
+    "NOX_BARC",
+    "CO_BARC",
+    "O3_BARC",
+    "PM10_BARC",
+    "WS_BARC",
+    "WD_BARC",
+    "Temp_BARC",
+    "RH_BARC",
+    "BP_BARC",
+    "SR_BARC"
+  ],
+  "n_features": 14,
+  "window_size": 24,
+  "horizon": 1,
+  "train_ratio": 0.7,
+  "val_ratio": 0.15,
+  "test_ratio": 0.15,
+  "train_samples": 6124,
+  "val_samples": 1294,
+  "test_samples": 1294,
+  "date_range": [
+    "2024-01-01 01:00:00",
+    "2025-01-01 00:00:00"
+  ],
+  "uses_cyclic_time_features": false,
+  "uses_lagged_target_feature": true,
+  "spike_weighting": {
+    "spike_threshold": 75.0,
+    "spike_weight": 3.0,
+    "extreme_spike_threshold": 150.0,
+    "extreme_spike_weight": 5.0
+  }
+}
